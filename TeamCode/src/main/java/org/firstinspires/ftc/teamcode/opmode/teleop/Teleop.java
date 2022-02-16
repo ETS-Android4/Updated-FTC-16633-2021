@@ -183,7 +183,6 @@ public class Teleop extends OpMode {
                 bucket(PositionFields.BUCKET_HOLDING);
                 robot.intakeBar.setPosition(PositionFields.BUCKET_OVER);
             }
-
             else if(bucketState == 1)
             {
                 if(intakeBar == 1)
@@ -199,9 +198,8 @@ public class Teleop extends OpMode {
             }
             else if(bucketState == 2)
             {
-                bucketState = 0;
-                bucket(PositionFields.BUCKET_INTAKE);
-                }
+                resetRobot();
+            }
         }
         preValueA = necessaryFunctionsGamepad.a;
 
@@ -384,10 +382,10 @@ public class Teleop extends OpMode {
     public void checkSlider() {
         //Automatic COntrol
         if (player2.dpad_up && player2.dpad_up != preValueDUp) {
-            if (intakeBar == 0) {
+           robot.intakeBar.setPosition(PositionFields.BUCKET_NOT_OVER);
+           intakeBar = 0;
                 if (sliderState == 0 || sliderState == 1 || sliderState == 2) {
                     sliderState = 3;
-                    telemetry.addLine("in");
                     target = PositionFields.TOP;
                 } else if (sliderState == 3) {
                     sliderState = 4;
@@ -397,7 +395,7 @@ public class Teleop extends OpMode {
                 slider(target);
                 capstone(capstoneTarget);
             }
-        }
+
         preValueDUp = player2.dpad_up;
         if (player2.dpad_down && player2.dpad_down != preValueDDown) {
             if (intakeBar == 0) {
